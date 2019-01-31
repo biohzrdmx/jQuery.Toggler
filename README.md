@@ -75,7 +75,6 @@ $('[data-toggler]').toggler({
       } else {
         el.addClass('hide');
       }
-      el.closest('.form-group').removeClass('has-error');
     }
   }
 });
