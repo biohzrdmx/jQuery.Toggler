@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<title>jQuery.Toggler</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/monokai-sublime.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700">
+	<style>
+		body {
+			background: #333333;
+			color: #FFFFFF;
+			display: flex;
+			min-height: 100vh;
+			flex-direction: column;
+			font-family: 'Roboto', sans-serif;
+		}
+		header {
+			background: #282828;
+			color: #FFFFFF;
+		}
+		header .logo {
+			font-size: 2rem;
+			font-weight: 300;
+			margin: 0;
+		}
+		footer {
+			background: #282828;
+			color: #FFFFFF;
+		}
+		section {
+			flex: 1 0 0;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			font-weight: 300;
+		}
+		.tagline {
+			font-size: 1.25rem;
+			font-weight: 300;
+			font-style: italic;
+			margin-bottom: 5px;
+		}
+		.demo-wrapper {
+			background: #23241F;
+			border-radius: 3px;
+			padding: 10px;
+			margin-bottom: 15px;
+		}
+		.demo-wrapper > *:last-child {
+			margin-bottom: 0;
+		}
+		a {
+			color: #26C6DA;
+		}
+		a:hover {
+			color: #00ACC1;
+			text-decoration: none;
+		}
+		.wrapper {
+			width: 320px;
+		}
+		.conditional {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="container p-3">
+			<h1 class="logo">jQuery.Toggler</h1>
+		</div>
+	</header>
+	<section>
+		<div class="container p-3">
+			<p class="tagline">Toggle elements (state/visibility) based on the value of other fields, with wide customization support</p>
+			<p>Spice up your forms and provide dynamic field groups depending on the selected options.</p>
+			<p><a href="https://github.com/biohzrdmx/jQuery.Toggler" class="btn btn-info"><i class="fa fa-github"></i> View on GitHub</a></p>
+			<h2 id="live-demo">Live demo</h2>
+			<div class="demo-wrapper">
+				<div class="form-group">
+					<select name="foo" id="foo" data-toggler="foo" class="form-control">
+						<option value="">Pick one option</option>
+						<option value="bar">bar</option>
+						<option value="baz">baz</option>
+					</select>
+				</div>
+				<div class="conditional alert alert-info conditional" data-toggle-condition="foo" data-toggle-value="bar">The value is bar</div>
+				<div class="conditional alert alert-success conditional" data-toggle-condition="foo" data-toggle-value="baz">The value is baz</div>
+				<div class="text-muted">Pick an option and see!</div>
+			</div>
+			<!--  -->
+<h2 id="installing">Installing</h2>
+<p>Just download <code>jquery.toggler.js</code> then add it to your HTML file:</p>
+<pre><code class="language-html">&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.toggler.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p>You may instead use the minified version if you like.</p>
+<h2 id="basic-usage">Basic usage</h2>
+<p>You&#39;ll need a select or another predictable-value form control, for example:</p>
+<pre><code class="language-html">  &lt;select name=&quot;foo&quot; id=&quot;foo&quot; data-toggler=&quot;foo&quot;&gt;
+    &lt;option value=&quot;bar&quot;&gt;bar&lt;/option&gt;
+    &lt;option value=&quot;baz&quot;&gt;baz&lt;/option&gt;
+  &lt;/select&gt;</code></pre>
+<p>Notice how we added a <code>data-toggler</code> attribute and set it to <code>foo</code>. This is important</p>
+<p>Not you&#39;ll need to add your conditional elements, for example:</p>
+<pre><code class="language-html">  &lt;div class=&quot;conditional&quot; data-toggle-condition=&quot;foo&quot; data-toggle-value=&quot;bar&quot;&gt;The value is bar&lt;/div&gt;
+  &lt;div class=&quot;conditional&quot; data-toggle-condition=&quot;foo&quot; data-toggle-value=&quot;baz&quot;&gt;The value is baz&lt;/div&gt;</code></pre>
+<p>Now you should notice the two attributes that we added to each of the conditional blocks:</p>
+<ul>
+<li><code>data-toggle-condition</code> - Specifies which condition to check on, for this example we only have one, <code>foo</code></li>
+<li><code>data-toggle-value</code> - Specifies the value of the condition that will toggle the element, in this case we may have specified either <code>bar</code> or <code>baz</code> as they are the possible options on the <code>select</code> control</li>
+</ul>
+<p>There are another two possible <code>data</code> attributes:</p>
+<ul>
+<li><code>data-toggle-function</code> - Specifies the toggle function, the default is <code>display</code> and will toggle the CSS <code>display</code> property between <code>none</code> and <code>block</code>. There is another one, <code>enabled</code> and will toggle the <code>disabled</code> attribute.</li>
+<li><code>data-toggle-solver</code> - Specifies the toggle solver, the default is <code>value</code> and will check the <code>value</code> of the control. Other included solvers are <code>valueNot</code> which just inverts the evaluation and <code>oneOf</code> which accepts several possible conditions separated by a <em>pipe</em> <code>|</code>, for example <code>foo|quaz</code> (given that you have both conditions available).</li>
+</ul>
+<p>We also added a <code>conditional</code> class, you may use it to hide the contents initially, with a <code>display: none</code> property for example.</p>
+<p>Once you&#39;re done with the markup, just add a simple call on your <code>onDomReady</code> callback:</p>
+<pre><code class="language-javascript">  $(&#39;[data-toggler]&#39;).toggler();</code></pre>
+<p>And that&#39;s all. Change the <code>select</code> value and you&#39;ll see how the other boxes are automatically shown/hidden.</p>
+<p>You may chain a <code>change</code> event trigger if you feel so:</p>
+<pre><code class="language-javascript">  $(&#39;[data-toggler]&#39;).toggler().trigger(&#39;change&#39;);</code></pre>
+<p>That way the initial values will also trigger a toggle on the linked containers.</p>
+<h2 id="advanced-usage">Advanced usage</h2>
+<p>You may add your own solvers and togglers if you like. Just extend the <code>$.toggler.defaults</code> object or add an options hash on your call to the <code>toggler</code> function:</p>
+<pre><code class="language-javascript">$(&#39;[data-toggler]&#39;).toggler({
+  togglers: {
+    unhide: function(el, toggle, opts) {
+      if (toggle) {
+        el.removeClass(&#39;hide&#39;);
+      } else {
+        el.addClass(&#39;hide&#39;);
+      }
+    }
+  }
+});</code></pre>
+<p>In this example we just added a toggle function named <code>unhide</code> that toggles the <code>hide</code> class on your containers, to use it specify it at the <code>data-toggle-function</code> attribute:</p>
+<pre><code class="language-html">  &lt;div class=&quot;conditional&quot; data-toggle-condition=&quot;foo&quot; data-toggle-value=&quot;bar&quot; data-toggle-function=&quot;unhide&quot;&gt;The value is bar&lt;/div&gt;
+  &lt;div class=&quot;conditional&quot; data-toggle-condition=&quot;foo&quot; data-toggle-value=&quot;baz&quot; data-toggle-function=&quot;unhide&quot;&gt;The value is baz&lt;/div&gt;</code></pre>
+<p>To add a solver, do the same but on the <code>solvers</code> object:</p>
+<pre><code class="language-javascript">$(&#39;[data-toggler]&#39;).toggler({
+  solvers: {
+    numeric: function(el, param, item, opts) {
+      var val = el.val();
+      return !isNaN(val);
+    }
+  }
+});</code></pre>
+<p>There we added a simple solver for numeric-values only. To use it, specify it at the <code>data-toggle-solver</code> attribute:</p>
+<pre><code class="language-html">  &lt;div class=&quot;conditional&quot; data-toggle-condition=&quot;foo&quot; data-toggle-value=&quot;&quot; data-toggle-solver=&quot;numeric&quot;&gt;The value is bar&lt;/div&gt;
+  &lt;div class=&quot;conditional&quot; data-toggle-condition=&quot;foo&quot; data-toggle-value=&quot;&quot; data-toggle-solver=&quot;numeric&quot;&gt;The value is baz&lt;/div&gt;</code></pre>
+<p>In this case the <code>data-toggle-value</code> attribute is irrelevant for the check.</p>
+<p>You may also customize both of them, just use each attribute when required.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>jQuery 1.8+</li>
+<li>A recent/decent web browser (Firefox, Chrome or Opera suggested; <strong>IE/Edge NOT TESTED/DON&#39;T CARE</strong>)</li>
+</ul>
+<h2 id="licensing">Licensing</h2>
+<p>MIT Licensed</p>
+<h2 id="contributing">Contributing</h2>
+<p>Fork the repo, add an interesting feature or fix a bug and send a pull request.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>Open an issue and provide a clear description of the error, how to reproduce it and your test environment specs (browser, jQuery version, etc.)</p>
+<h2 id="credits">Credits</h2>
+<p>Lead coder: biohzrdmx (github.com/biohzrdmx)</p>
+			<!--  -->
+		</div>
+	</section>
+	<footer>
+		<div class="container p-3 text-center">
+			<small>&copy; 2019 biohzrdmx. All rights reserved.</small>
+		</div>
+	</footer>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+	<script type="text/javascript" src="jquery.toggler.min.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			hljs.initHighlightingOnLoad();
+			$('[data-toggler]').toggler();
+		});
+	</script>
+</body>
+</html>
